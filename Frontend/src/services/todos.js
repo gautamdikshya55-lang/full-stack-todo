@@ -1,17 +1,27 @@
 import { API_URL } from "../config/api";
 
+// Always read token directly from localStorage
+function getToken() {
+  return localStorage.getItem("token");
+}
+
 // GET ALL TODOS
-export async function getTodos(token) {
+export async function getTodos() {
+  const token = getToken();
+
   const res = await fetch(`${API_URL}/todos`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
   return res.json();
 }
 
-// ADD TODO (supports dueDate)
-export async function addTodoAPI(data, token) {
+// ADD TODO
+export async function addTodoAPI(data) {
+  const token = getToken();
+
   const res = await fetch(`${API_URL}/todos`, {
     method: "POST",
     headers: {
@@ -20,11 +30,14 @@ export async function addTodoAPI(data, token) {
     },
     body: JSON.stringify(data),
   });
+
   return res.json();
 }
 
-// UPDATE TODO (text, completed, dueDate)
-export async function updateTodoAPI(id, data, token) {
+// UPDATE TODO
+export async function updateTodoAPI(id, data) {
+  const token = getToken();
+
   const res = await fetch(`${API_URL}/todos/${id}`, {
     method: "PUT",
     headers: {
@@ -33,11 +46,14 @@ export async function updateTodoAPI(id, data, token) {
     },
     body: JSON.stringify(data),
   });
+
   return res.json();
 }
 
 // DELETE TODO
-export async function deleteTodoAPI(id, token) {
+export async function deleteTodoAPI(id) {
+  const token = getToken();
+
   return fetch(`${API_URL}/todos/${id}`, {
     method: "DELETE",
     headers: {
