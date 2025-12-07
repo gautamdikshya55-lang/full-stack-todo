@@ -1,4 +1,5 @@
-import { API_URL } from "../config/api";
+import { VITE_API_URL } from "../config/api";
+
 
 export async function login(email, password) {
   const res = await fetch(`${API_URL}/auth/login`, {
